@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
+// import { SvgIconProps } from '@material-ui/core/SvgIcon'
 
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
+
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
@@ -11,6 +12,8 @@ import Collapse from '@material-ui/core/Collapse'
 
 import IconExpandLess from '@material-ui/icons/ExpandLess'
 import IconExpandMore from '@material-ui/icons/ExpandMore'
+
+import AppMenuItemComponent from '../AppMenuItemComponent/AppMenuItemComponent'
 
 // React runtime PropTypes
 export const AppMenuItemPropTypes = {
@@ -31,7 +34,7 @@ export type AppMenuItemProps = AppMenuItemPropsWithoutItems & {
 }
 
 const AppMenuItem: React.FC<AppMenuItemProps> = props => {
-  const { name, Icon, items = [] } = props
+  const { name, link, Icon, items = [] } = props
   const classes = useStyles()
   const isExpandable = items && items.length > 0
   const [open, setOpen] = React.useState(false)
@@ -41,7 +44,7 @@ const AppMenuItem: React.FC<AppMenuItemProps> = props => {
   }
 
   const MenuItemRoot = (
-    <ListItem button className={classes.menuItem} onClick={handleClick}>
+    <AppMenuItemComponent className={classes.menuItem} link={link} onClick={handleClick}>
       {/* Display an icon if any */}
       {!!Icon && (
         <ListItemIcon className={classes.menuItemIcon}>
@@ -52,7 +55,7 @@ const AppMenuItem: React.FC<AppMenuItemProps> = props => {
       {/* Display the expand menu if the item has children */}
       {isExpandable && !open && <IconExpandMore />}
       {isExpandable && open && <IconExpandLess />}
-    </ListItem>
+    </AppMenuItemComponent>
   )
 
   const MenuItemChildren = isExpandable ? (
@@ -74,11 +77,21 @@ const AppMenuItem: React.FC<AppMenuItemProps> = props => {
   )
 }
 
-AppMenuItem.propTypes = AppMenuItemPropTypes
-
 const useStyles = makeStyles(theme =>
   createStyles({
-    menuItem: {},
+    menuItem: {
+      borderTop: 'solid 1px #1e1e1e',
+      '&:last-of-type': {
+        borderBottom: 'solid 1px #1e1e1e',
+      },
+      '&:hover': {
+        color: '#9f1515',
+      },
+      '&.active': {
+        background: 'rgba(0, 0, 0, 0.08)',
+      },
+
+    },
     menuItemIcon: {
       color: '#9f1515',
     },
@@ -86,3 +99,5 @@ const useStyles = makeStyles(theme =>
 )
 
 export default AppMenuItem
+
+

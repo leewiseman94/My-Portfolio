@@ -14,7 +14,7 @@ export const appMenuItems = [
   },
   {
     name: 'My Skills',
-    link: '/my-skills',
+    link: '/skills',
     Icon: IconSchool,
   },
   {
